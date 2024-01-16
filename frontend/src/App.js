@@ -7,6 +7,10 @@ const UNPLEASH_KEY = process.env.REACT_APP_UNPLEASH_KEY;
 //const UNPLEASH_KEY ='xQNZHWbeza-B0eHAQFuDaNE_39LoRIRu-_4heDzVjoY'
 const App = () => {
   const [word, setword] = useState('');
+  const [images, setImages] = useState([]);
+
+  console.log(images);
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     console.log(word);
@@ -16,7 +20,7 @@ const App = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        setImages([data, ...images]);
       })
       .catch((err) => {
         console.log(err);
