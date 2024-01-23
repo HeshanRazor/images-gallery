@@ -33,6 +33,10 @@ const App = () => {
     setword('');
   };
 
+  const handelDeleteImage = (id) => {
+    setImages(images.filter((image) => image.id !== id));
+  };
+
   //console.log(UNPLEASH_KEY); {!!images.length && <ImageCard image={images[0]} />}
   return (
     <div className="App">
@@ -42,7 +46,7 @@ const App = () => {
         <Row xs={1} md={2} lg={4}>
           {images.map((image, i) => (
             <Col key={i} className="pb-3">
-              <ImageCard image={image} />
+              <ImageCard image={image} deleteImage={handelDeleteImage} />
             </Col>
           ))}
         </Row>
