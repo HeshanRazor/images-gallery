@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import Search from './components/Search';
 import ImageCard from './components/imagesCard';
+import Welcome from './components/Welcome';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -50,17 +51,20 @@ const App = () => {
     <div className="App">
       <Header title="Images Gallery" />
       {errorMessage && <p className="text-danger">{errorMessage}</p>}
-
+      {/* <!-- <div className="jumbotron">.....</div> -->*/}
       <Search word={word} setword={setword} handleSubmit={handleSearchSubmit} />
-
       <Container className="mt-4">
-        <Row xs={1} md={2} lg={4}>
-          {images.map((image, i) => (
-            <Col key={i} className="pb-3">
-              <ImageCard image={image} deleteImage={handelDeleteImage} />
-            </Col>
-          ))}
-        </Row>
+        {images.length ? (
+          <Row xs={1} md={2} lg={4}>
+            {images.map((image, i) => (
+              <Col key={i} className="pb-3">
+                <ImageCard image={image} deleteImage={handelDeleteImage} />
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Welcome />
+        )}
       </Container>
     </div>
   );
