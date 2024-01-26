@@ -13,6 +13,7 @@ const UNPLEASH_KEY = process.env.REACT_APP_UNPLEASH_KEY;
 const App = () => {
   const [word, setword] = useState('');
   const [images, setImages] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   //console.log(images);
 
@@ -20,17 +21,24 @@ const App = () => {
     e.preventDefault();
     console.log(word);
     //console.log(UNPLEASH_KEY);
-    fetch(
-      `https://api.unsplash.com/photos/random?query=${word}&client_id=${UNPLEASH_KEY}`,
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setImages([{ ...data, title: word }, ...images]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setword('');
+    if (!word.trim('')) {
+      // setErrorMessage('Please enter a search text.');
+      return;
+    } else {
+      fetch(
+        `https://api.unsplash.com/photos/random?query=${word}&client_id=${UNPLEASH_KEY}`,
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setImages([{ ...data, title: word }, ...images]);
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrorMessage('Error fetching images. Please try again.');
+        });
+      setErrorMessage('');
+      setword('');
+    }
   };
 
   const handelDeleteImage = (id) => {
@@ -41,7 +49,10 @@ const App = () => {
   return (
     <div className="App">
       <Header title="Images Gallery" />
+      {errorMessage && <p className="text-danger">{errorMessage}</p>}
+
       <Search word={word} setword={setword} handleSubmit={handleSearchSubmit} />
+
       <Container className="mt-4">
         <Row xs={1} md={2} lg={4}>
           {images.map((image, i) => (

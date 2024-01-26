@@ -6,29 +6,29 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Stack from 'react-bootstrap/Stack';
 
-const Search = ({ word, setword, handleSubmit }) => {
-  return (
-    <Container className="mt-4">
-      <Row className="justify-content-center">
-        <Col xs={12} md={6}>
-          <form onSubmit={handleSubmit}>
-            <Stack direction="horizontal" gap={3}>
-              <Form.Control
-                className="me-auto"
-                type="text"
-                value={word}
-                onChange={(e) => setword(e.target.value)}
-                placeholder="Search images here..."
-              />
-              <Button variant="primary" type="submit">
-                Search
-              </Button>
-            </Stack>
-          </form>
-        </Col>
-      </Row>
-    </Container>
-  );
-};
+const Search = ({ word, setword, handleSubmit }) => (
+  <Container className="mt-4">
+    <Row className="justify-content-center">
+      <Col xs={12} md={6}>
+        <form onSubmit={handleSubmit}>
+          <Stack direction="horizontal" gap={3}>
+            <Form.Control
+              className="me-auto"
+              type="text"
+              value={word}
+              onChange={(e) => setword(e.target.value)}
+              placeholder={
+                word.trim() ? 'Search images here...' : 'Search images here...'
+              }
+            />
+            <Button variant="primary" type="submit" disabled={!word.trim()}>
+              Search
+            </Button>
+          </Stack>
+        </form>
+      </Col>
+    </Row>
+  </Container>
+);
 
 export default Search;
